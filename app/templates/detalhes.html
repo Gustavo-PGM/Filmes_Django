@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ filme.title }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/detalhes.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>{{ filme.title }}</h1>
+        <div class="row">
+            <div class="col-md-4">
+                {% if filme.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w500{{ filme.poster_path }}" class="img-fluid" alt="{{ filme.title }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/500x750?text=Imagem+não+disponível" class="img-fluid" alt="Imagem não disponível">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <h2>Sinopse</h2>
+                <p>{{ filme.overview }}</p>
+                <p><strong>Data de Lançamento:</strong> {{ filme.release_date }}</p>
+                <p><strong>Avaliação:</strong> {{ filme.vote_average }}/10</p>
+
+                <p><strong>Mais Informações:</strong>
+                    <a href="https://www.themoviedb.org/movie/{{ filme.id }}" target="_blank">Veja mais detalhes no TMDb</a>
+                </p>
+
+                {% if filme.homepage %}
+                    <p><strong>Onde Assistir:</strong>
+                        <a href="{{ filme.homepage }}" target="_blank">Assista aqui</a>
+                    </p>
+                {% else %}
+                    <p><strong>Onde Assistir:</strong> Informação não disponível.</p>
+                {% endif %}
+
+                <a href="{% url 'index' %}" class="btn btn-secondary">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Filmes</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Pesquisa de Filmes</h1>
+        <form method="GET" class="mb-4">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Digite o nome do filme" value="{{ request.GET.query }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        {% if request.GET.query %}
+            <h3>Resultados da Pesquisa</h3>
+        {% else %}
+            <h3>Filmes Populares</h3>
+        {% endif %}
+
+        <div class="row">
+            {% if filmes %}
+                {% for filme in filmes %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            {% if filme.poster_path %}
+                                <img src="https://image.tmdb.org/t/p/w500{{ filme.poster_path }}" class="card-img-top" alt="{{ filme.title }}">
+                            {% else %}
+                                <img src="https://via.placeholder.com/500x750?text=Imagem+não+disponível" class="card-img-top" alt="Imagem não disponível">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ filme.title }}</h5>
+                                <p class="card-text">{{ filme.overview|slice:":150" }}{% if filme.overview|length > 150 %}...{% endif %}</p>
+                                <a href="{% url 'detalhes' filme.id %}" class="btn btn-primary">Mais detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% if populares %}
+                    {% for filme in populares %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                {% if filme.poster_path %}
+                                    <img src="https://image.tmdb.org/t/p/w500{{ filme.poster_path }}" class="card-img-top" alt="{{ filme.title }}">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/500x750?text=Imagem+não+disponível" class="card-img-top" alt="Imagem não disponível">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ filme.title }}</h5>
+                                    <p class="card-text">{{ filme.overview|slice:":150" }}{% if filme.overview|length > 150 %}...{% endif %}</p>
+                                    <a href="{% url 'detalhes' filme.id %}" class="btn btn-primary">Mais detalhes</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-warning" role="alert">
+                            Nenhum filme encontrado.
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
