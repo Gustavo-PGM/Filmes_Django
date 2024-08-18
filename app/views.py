@@ -9,7 +9,7 @@ def index(request):
     if query:
         url = "https://api.themoviedb.org/3/search/movie"
         params = {
-            "api_key": "f71cbd557fbec92edd5da60b25d1efbb",
+            "api_key": "Coloque Sua API aqui",
             "query": query,
             "language": "pt-BR"
         }
@@ -21,7 +21,7 @@ def index(request):
 
         url = "https://api.themoviedb.org/3/movie/popular"
         params = {
-            "api_key": "f71cbd557fbec92edd5da60b25d1efbb",
+            "api_key": "Coloque Sua API aqui",
             "language": "pt-BR"
         }
         response = requests.get(url, params=params)
@@ -39,7 +39,7 @@ def index(request):
 def detalhes(request, filme_id):
     url = f"https://api.themoviedb.org/3/movie/{filme_id}"
     params = {
-        "api_key": "f71cbd557fbec92edd5da60b25d1efbb",
+        "api_key": "Coloque Sua API aqui",
         "language": "pt-BR"
     }
     response = requests.get(url, params=params)
